@@ -2,15 +2,16 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>AI Reasoning Tester</title>
+<title>AI Reasoning Chat</title>
 
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 
-<meta name="theme-color" content="#1a73e8">
+<meta name="theme-color" content="#10a37f">
 
 </head>
 
@@ -18,35 +19,42 @@
 
 <div class="app">
 
-<header>
-<h1>AI Reasoning Tester</h1>
+<header class="topbar">
+
+<h1>AI Reasoning Chat</h1>
+
+<button id="settingsBtn">⚙</button>
+
 </header>
 
-<section class="card">
+<div id="chat" class="chat"></div>
 
-<label>OpenRouter API Key</label>
+<div class="input-area">
+
+<textarea id="prompt" placeholder="Ask something..."></textarea>
+
+<button id="send">Send</button>
+
+</div>
+
+</div>
+
+<div id="settings" class="settings hidden">
+
+<div class="settings-box">
+
+<h3>OpenRouter API Key</h3>
+
 <input id="apikey" type="password" placeholder="Enter API key">
 
-<label>Question</label>
-<textarea id="question" rows="3" placeholder="Type your question"></textarea>
+<button id="saveKey">Save</button>
 
-<button id="askBtn">Ask AI</button>
-
-</section>
-
-<section class="card">
-
-<h3>Answer</h3>
-<div id="answer" class="output"></div>
-
-<h3>Reasoning</h3>
-<div id="reasoning" class="output"></div>
-
-</section>
+</div>
 
 </div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
