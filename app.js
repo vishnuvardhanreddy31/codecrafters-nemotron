@@ -1,18 +1,24 @@
 const chat = document.getElementById("chat")
 
-const sendBtn = document.getElementById("send")
-
 const promptBox = document.getElementById("prompt")
 
-const settings = document.getElementById("settings")
+const sendBtn = document.getElementById("send")
+
+const modelSelect = document.getElementById("model")
+
+const clearBtn = document.getElementById("clear")
 
 const settingsBtn = document.getElementById("settingsBtn")
 
-const saveKey = document.getElementById("saveKey")
+const settings = document.getElementById("settings")
 
 const keyInput = document.getElementById("apikey")
 
+const saveKey = document.getElementById("saveKey")
+
 let apiKey = localStorage.getItem("openrouter_key")
+
+let history = JSON.parse(localStorage.getItem("chat_history") || "[]")
 
 if(apiKey) keyInput.value = apiKey
 
@@ -22,17 +28,23 @@ settings.classList.toggle("hidden")
 }
 
 saveKey.onclick=()=>{
-localStorage.setItem("openrouter_key",keyInput.value)
 apiKey = keyInput.value
+localStorage.setItem("openrouter_key",apiKey)
 settings.classList.add("hidden")
 }
 
+clearBtn.onclick=()=>{
+history=[]
+localStorage.removeItem("chat_history")
+chat.innerHTML=""
+}
 
-function addMessage(text,type,reasoning){
+
+function renderMessage(role,text,reasoning){
 
 const msg=document.createElement("div")
 
-msg.className="message "+type
+msg.className="message "+role
 
 msg.innerText=text
 
@@ -55,15 +67,28 @@ chat.scrollTop=chat.scrollHeight
 }
 
 
-sendBtn.onclick=async()=>{
+history.forEach(m=>{
+renderMessage(m.role,m.content,m.reasoning)
+})
 
-const question=promptBox.value
+
+sendBtn.onclick=send
+
+
+async function send(){
+
+const question=promptBox.value.trim()
 
 if(!question)return
 
-addMessage(question,"user")
-
 promptBox.value=""
+
+renderMessage("user",question)
+
+history.push({
+role:"user",
+content:question
+})
 
 const loading=document.createElement("div")
 
@@ -73,28 +98,20 @@ loading.innerText="Thinking..."
 
 chat.appendChild(loading)
 
-chat.scrollTop=chat.scrollHeight
-
 const response=await fetch(
 "https://openrouter.ai/api/v1/chat/completions",
 {
 method:"POST",
-
 headers:{
-"Authorization":"Bearer "+apiKey,
+Authorization:"Bearer "+apiKey,
 "Content-Type":"application/json"
 },
 
 body:JSON.stringify({
 
-model:"nvidia/nemotron-nano-12b-v2-vl:free",
+model:modelSelect.value,
 
-messages:[
-{
-role:"user",
-content:question
-}
-],
+messages:history,
 
 extra_body:{
 include_reasoning:true
@@ -110,13 +127,21 @@ loading.remove()
 
 if(!data.choices){
 
-addMessage("API Error","ai")
+renderMessage("ai","API error")
 
 return
 }
 
 const msg=data.choices[0].message
 
-addMessage(msg.content,"ai",msg.reasoning)
+renderMessage("ai",msg.content,msg.reasoning)
+
+history.push({
+role:"assistant",
+content:msg.content,
+reasoning:msg.reasoning
+})
+
+localStorage.setItem("chat_history",JSON.stringify(history))
 
 }
