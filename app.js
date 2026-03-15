@@ -58,3 +58,8 @@ answerBox.textContent = msg.content || "";
 reasoningBox.textContent = msg.reasoning || "No reasoning";
 
 }
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("sw.js");
+
+}
