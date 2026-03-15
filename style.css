@@ -2,7 +2,7 @@
 box-sizing:border-box;
 margin:0;
 padding:0;
-font-family:system-ui,Segoe UI,Roboto;
+font-family:system-ui,Segoe UI;
 }
 
 body{
@@ -14,20 +14,42 @@ height:100vh;
 display:flex;
 flex-direction:column;
 height:100vh;
-max-width:700px;
+max-width:900px;
 margin:auto;
 }
 
 .topbar{
 
+background:#202123;
+color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:12px 16px;
-background:#202123;
-color:white;
-font-size:16px;
+padding:10px 16px;
 
+}
+
+.title{
+font-weight:600;
+}
+
+.top-actions{
+display:flex;
+gap:8px;
+}
+
+select,button{
+
+border:none;
+padding:6px 10px;
+border-radius:6px;
+
+}
+
+button{
+background:#10a37f;
+color:white;
+cursor:pointer;
 }
 
 .chat{
@@ -47,7 +69,7 @@ max-width:85%;
 padding:12px;
 border-radius:12px;
 font-size:14px;
-line-height:1.4;
+line-height:1.5;
 
 }
 
@@ -78,8 +100,8 @@ opacity:0.8;
 .input-area{
 
 display:flex;
-padding:12px;
-gap:10px;
+gap:8px;
+padding:10px;
 background:#40414f;
 
 }
@@ -87,28 +109,16 @@ background:#40414f;
 textarea{
 
 flex:1;
-resize:none;
 border:none;
-border-radius:10px;
+border-radius:8px;
 padding:10px;
+resize:none;
 font-size:14px;
 
 }
 
 textarea:focus{
 outline:none;
-}
-
-button{
-
-border:none;
-background:#10a37f;
-color:white;
-padding:10px 16px;
-border-radius:10px;
-font-weight:600;
-cursor:pointer;
-
 }
 
 .settings{
@@ -129,20 +139,19 @@ justify-content:center;
 
 background:white;
 padding:20px;
-border-radius:12px;
-width:300px;
-
-}
-
-.settings input{
-
-width:100%;
-padding:10px;
-margin-top:10px;
-margin-bottom:12px;
+border-radius:10px;
+width:280px;
 
 }
 
 .hidden{
 display:none;
+}
+
+@media(max-width:600px){
+
+.top-actions select{
+display:none;
+}
+
 }
