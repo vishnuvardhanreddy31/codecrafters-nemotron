@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -21,9 +20,30 @@
 
 <header class="topbar">
 
-<h1>AI Reasoning Chat</h1>
+<div class="title">AI Reasoning Chat</div>
+
+<div class="top-actions">
+
+<select id="model">
+<option value="nvidia/nemotron-nano-12b-v2-vl:free">
+Nemotron Nano
+</option>
+
+<option value="mistralai/mistral-7b-instruct">
+Mistral 7B
+</option>
+
+<option value="meta-llama/llama-3-8b-instruct">
+Llama-3 8B
+</option>
+
+</select>
+
+<button id="clear">Clear</button>
 
 <button id="settingsBtn">⚙</button>
+
+</div>
 
 </header>
 
@@ -31,7 +51,7 @@
 
 <div class="input-area">
 
-<textarea id="prompt" placeholder="Ask something..."></textarea>
+<textarea id="prompt" rows="1" placeholder="Ask something..."></textarea>
 
 <button id="send">Send</button>
 
@@ -39,13 +59,14 @@
 
 </div>
 
+
 <div id="settings" class="settings hidden">
 
 <div class="settings-box">
 
 <h3>OpenRouter API Key</h3>
 
-<input id="apikey" type="password" placeholder="Enter API key">
+<input id="apikey" type="password">
 
 <button id="saveKey">Save</button>
 
@@ -56,5 +77,4 @@
 <script src="app.js"></script>
 
 </body>
-
 </html>
